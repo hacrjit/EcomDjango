@@ -1,0 +1,107 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Checkout{% endblock title %}
+
+{% block main-content %}
+<div class="container my-5">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="row mt-5">
+        <div class="col-sm-6">
+            <h4>Order Summary</h4>
+            <hr>
+            {% for item in cart_items %}
+                <div class="card mb-2">
+                    <div class="card-body">
+                        <h5>Product: {{ item.product.title }}</h5>
+                        <p>Quantity: {{ item.quantity }}</p>
+                        <p class="fw-bold">Price: {{ item.product.discounted_price }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+            <p class="fw-bold">Total Cost Rs. {{ totalamount }}</p>
+            <small>Terms and Conditions: Lorem ipsum, dolor sit amet consectetur adipisicing elit. Facilis itaque optio explicabo labore error ipsam ex sit sequi. Doloremque iure error et eaque quam officia quas iusto hic deserunt possimus.</small>
+        </div>
+        <div class="col-sm-6">
+            <h4>Shipping Address</h4>
+            <hr>
+            <form method="post" id="myform">
+                {% csrf_token %}
+                {% for ad in add %}
+                    <div class="card mb-2">
+                        <div class="card-body">
+                            <input type="radio" name="address" value="{{ ad.id }}" required>
+                            <h5>{{ ad.name }}</h5>
+                            <p>{{ ad.address }}</p>
+                            <p>{{ ad.city }}</p>
+                            <p>{{ ad.state }}</p>
+                            <p>{{ ad.zipcode }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+                <button id="rzp-button1" type="submit" class="btn btn-primary">Payment</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock main-content %}
+
+{% block payment-gateway %}
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<!-- Payment Details Section -->
+<div id="paymentDetails" style="display:none;">
+    <h3>Payment Details</h3>
+    <p id="paymentId">Payment ID: </p>
+    <p id="orderId">Order ID: </p>
+    <p id="signature">Signature: </p>
+    <p id="customerId">Customer ID: </p> <!-- Placeholder for customer ID -->
+</div>
+<script>
+    var options = {
+        "key": "rzp_test_LKiGfNVVIT0QWt", // Replace with your actual key ID from Razorpay dashboard
+        "amount": parseInt("{{ totalamount }}" * 100).toString(), // Amount in paise
+        "currency": "INR",
+        "name": "Your Company Name",
+        "description": "Test Transaction",
+        "image": "https://example.com/your_logo",
+        "order_id": "{{ order_id }}", // Pass the `id` obtained in the response of the server-side order creation
+        "handler": function (response){
+            var paymentId = response.razorpay_payment_id;
+            var orderId = response.razorpay_order_id;
+            var signature = response.razorpay_signature;
+            var customerId = "{{ customer_id }}"; // Assuming you have the customer ID available in the template
+
+            // Display payment details
+            document.getElementById('paymentDetails').style.display = 'block';
+            document.getElementById('paymentId').textContent = "Payment ID: " + paymentId;
+            document.getElementById('orderId').textContent = "Order ID: " + orderId;
+            document.getElementById('signature').textContent = "Signature: " + signature;
+            document.getElementById('customerId').textContent = "Customer ID: " + customerId; // Display customer ID
+        },
+        "prefill": {
+            "name": "Customer Name",
+            "email": "customer@example.com",
+            "contact": "9999999999"
+        },
+        "notes": {
+            "address": "Razorpay Corporate Office",
+            "customer_id": "{{ customer_id }}" // Add customer ID here
+        },
+        "theme": {
+            "color": "#3399cc"
+        }
+    };
+    var rzp1 = new Razorpay(options);
+    document.getElementById('rzp-button1').onclick = function(e){
+        rzp1.open();
+        e.preventDefault();
+    }
+</script>
+{% endblock payment-gateway %}

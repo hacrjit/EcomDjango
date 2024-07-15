@@ -1,0 +1,116 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Customer Registration{% endblock title %}
+
+{% block main-content %}
+    <style>
+        .registration-container {
+            margin-top: 50px;
+            margin-bottom: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .registration-card {
+            border: 1px solid #e6e6e6;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 500px; /* Increased max-width for better desktop layout */
+            background: #ffffff;
+        }
+        .registration-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        /* Specific styles for form elements */
+        .registration-card .form-control {
+            border-radius: 5px;
+            padding: 10px 15px;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            border: 1px solid #e6e6e6;
+            background-color: #fafafa;
+            width: 100%; /* Full width for better desktop layout */
+        }
+        .registration-card .form-control:focus {
+            border-color: #b3b3b3;
+            outline: 0;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+            background-color: #ffffff;
+        }
+        /* Specific styles for buttons */
+        .registration-card .btn-primary {
+            background-color: #0095f6;
+            border-color: #0095f6;
+            padding: 10px 15px;
+            font-size: 1rem;
+            border-radius: 5px;
+            font-weight: 600;
+            width: 100%;
+        }
+        .registration-card .btn-primary:hover {
+            background-color: #007bb5;
+            border-color: #007bb5;
+        }
+        /* Specific styles for the login link */
+        .registration-card .text-center small a {
+            color: #0095f6;
+        }
+        .registration-card .text-center small a:hover {
+            text-decoration: underline;
+        }
+        /* Specific styles for error messages */
+        .registration-card .alert-danger {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            padding: .75rem 1.25rem;
+            margin-bottom: 1rem;
+            border: 1px solid transparent;
+            border-radius: .25rem;
+        }
+    </style>
+
+    <div class="container registration-container">
+        <div class="registration-card">
+            <h3>Customer Registration</h3>
+            <form action="" method="post" novalidate>
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="mb-3">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        <small class="text-danger">{{ field.errors|striptags }}</small>
+                    </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <div class="text-center mt-3">
+                    <small>
+                        Already have an account? <a href="{% url 'login' %}" class="text-primary">Login</a>
+                    </small>
+                </div>
+
+                {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger mt-3">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-danger mt-3">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </form>
+        </div>
+    </div>
+{% endblock main-content %}

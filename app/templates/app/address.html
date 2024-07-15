@@ -1,0 +1,58 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Address{% endblock title %}
+
+{% block main-content %}
+
+<div class="container my-5">
+    <div class="row">
+        <h3>Welcome, <span class="text-capitalize">{{ request.user }}</span></h3>
+    </div>                                                                                  
+    <div class="row mt-4">
+        <div class="col-sm-2">
+            <div class="list-group">
+                <a href="{% url 'profile' %}" class="list-group-item list-group-item-action" aria-current="true">
+                    Profile
+                </a>
+                <a href="{% url 'address' %}" class="list-group-item list-group-item-action active">Address</a>
+            </div>
+        </div>
+        <div class="col-sm-8 offset-sm-1">
+            <div class="row">
+                {% for address in add %}
+                <div class="col-sm-6 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">
+                                Address {{ forloop.counter }}
+                            </h3>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <p>Name:</p>
+                                    <p>Locality:</p>
+                                    <p>City:</p>
+                                    <p>Zipcode:</p>
+                                    <p>State:</p>
+                                </div>
+                                <div class="col-sm-8">
+                                    <p>{{ address.name }}</p>
+                                    <p>{{ address.locality }}</p>
+                                    <p>{{ address.city }}</p>
+                                    <p>{{ address.zipcode }}</p>
+                                    <p>{{ address.state }}</p>
+                                </div>
+                            </div>
+                            <p class="text-center">
+                                <a href="{% url 'updateAddress' pk=address.id %}" type="button" class="btn btn-success">Update</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock main-content %}

@@ -1,0 +1,73 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Contact{% endblock title %}
+
+{% block main-content %}
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <h1>Contact Us</h1>
+                <p class="lead">
+                    We are here to assist you with any questions or concerns you may have. Please feel free to reach out to us.
+                </p>
+                <p>
+                    We are a leading dairy products company in India with a wide range of products to choose from. Your feedback and inquiries are important to us.
+                </p>
+            </div>
+        </div>
+        
+        <div class="row my-4">
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Our Office</h5>
+                        <p class="card-text">
+                            Address: 123 Dairy Lane, Milk City, India<br>
+                            Phone: +91 12345 67890<br>
+                            Email: contact@dairyproducts.com
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Get in Touch</h5>
+                        <form>
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="message" class="form-label">Message</label>
+                                <textarea class="form-control" id="message" rows="4" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row my-4">
+            <div class="col-sm-12">
+                <div class="card bg-light text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Follow Us</h5>
+                        <p class="card-text">Stay connected with us on social media</p>
+                        <a href="#" class="btn btn-primary"><i class="fab fa-facebook-f"></i> Facebook</a>
+                        <a href="#" class="btn btn-info"><i class="fab fa-twitter"></i> Twitter</a>
+                        <a href="#" class="btn btn-danger"><i class="fab fa-instagram"></i> Instagram</a>
+                        <a href="#" class="btn btn-warning"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock main-content %}
