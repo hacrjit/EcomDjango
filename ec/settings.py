@@ -132,5 +132,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # payment gateway settings
-RAZORPAY_API_KEY = 'rzp_test_LKiGfNVVIT0QWt'
-RAZORPAY_API_SECRET = 'FSKRE5Pf3J7ZtXBYRYLbukzT'
+RAZORPAY_API_KEY = 'rzp_live_o4Hd7hFS8GRmJA'
+RAZORPAY_API_SECRET = 'LdEFBqKuskHYuXIl1XshKNKh'
